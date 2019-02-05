@@ -7,7 +7,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class OkHttpPost {
+public class HttpClient {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -28,8 +28,8 @@ public class OkHttpPost {
     //Monta o body da requisição
     String bowlingJson(String email, String senha) {
         return "{"
-                + "'email':'"+email+"',"
-                + "'password':'"+senha+"'"
+                + "'email':'" + email + "',"
+                + "'password':'" + senha + "'"
                 + "}";
     }
 

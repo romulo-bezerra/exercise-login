@@ -18,7 +18,7 @@ public class PostService extends IntentService {
         String planEmail = intent.getStringExtra("email");
         String planPassword = intent.getStringExtra("password");
 
-        OkHttpPost httpClient = new OkHttpPost();
+        HttpClient httpClient = new HttpClient();
         String json = httpClient.bowlingJson(planEmail, planPassword);
 
         Boolean response = false;
