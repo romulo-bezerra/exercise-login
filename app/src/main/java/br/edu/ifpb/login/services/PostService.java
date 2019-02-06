@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class PostService extends IntentService {
 
+    private String response;
+
     public PostService() {
         super("Post Service");
     }
@@ -19,16 +21,8 @@ public class PostService extends IntentService {
         String planPassword = intent.getStringExtra("password");
 
         HttpClient httpClient = new HttpClient();
-        String json = httpClient.bowlingJson(planEmail, planPassword);
-
-        Boolean response = false;
-
-        try {
-            response = httpClient.post("http://ag-ifpb-sgd-server.herokuapp.com/login", json);
-            intent.putExtra("responseRequestPost", response);
-        } catch (IOException e) {
-            Log.d("Error: ", e.getMessage());
-        }
+        response = httpClient.post(planEmail, planPassword);
+        intent.putExtra("responseRequestPost", response);
 
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         manager.sendBroadcast(intent);

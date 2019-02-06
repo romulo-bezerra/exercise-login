@@ -20,16 +20,16 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiverPost = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-        btnAcessar.setText("Acessar");
-        btnAcessar.setEnabled(true);
+            btnAcessar.setText("Acessar");
+            btnAcessar.setEnabled(true);
 
-        Boolean responseRequestPost = intent.getBooleanExtra("responseRequestPost", false);
+            String responseRequestPost = intent.getStringExtra("responseRequestPost");
 
-        if (responseRequestPost){
-            Toast.makeText(getBaseContext(), "SUCCESS",Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getBaseContext(), "FAILED",Toast.LENGTH_SHORT).show();
-        }
+            if (responseRequestPost.equalsIgnoreCase("Success!!")){
+                Toast.makeText(getBaseContext(), "SUCCESS",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getBaseContext(), "FAILED",Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
