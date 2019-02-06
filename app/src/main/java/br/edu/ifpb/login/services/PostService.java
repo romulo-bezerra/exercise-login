@@ -9,22 +9,24 @@ import java.io.IOException;
 
 public class PostService extends IntentService {
 
-    private String response;
-
     public PostService() {
         super("Post Service");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        int codResponse;
         String planEmail = intent.getStringExtra("email");
         String planPassword = intent.getStringExtra("password");
 
-        HttpClient httpClient = new HttpClient();
-        response = httpClient.post(planEmail, planPassword);
-        intent.putExtra("responseRequestPost", response);
-
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
-        manager.sendBroadcast(intent);
+        try {
+            HttpClient httpClient = new HttpClient();
+            codResponse = httpClient.post(planEmail, planPassword);
+            intent.putExtra("responseRequestPost", codResponse);
+            LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+            manager.sendBroadcast(intent);
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
 }
