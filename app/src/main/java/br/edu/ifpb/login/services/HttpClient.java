@@ -12,7 +12,7 @@ public class HttpClient {
 
     private OkHttpClient client = new OkHttpClient();
 
-    public int post(String email, String password) throws IOException {
+    public int post(String email, String password) throws Exception{
         RequestBody formBody = new FormBody.Builder()
                 .add("email", email)
                 .add("password", password)
@@ -21,9 +21,10 @@ public class HttpClient {
                 .url("http://ag-ifpb-sgd-server.herokuapp.com/login")
                 .post(formBody)
                 .build();
-        Response response = client.newCall(request).execute();
-        if (!response.isSuccessful())
-            throw new IOException("Unexpected code " + response);
-        return response.code();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            return response.code();
+        }
     }
 }

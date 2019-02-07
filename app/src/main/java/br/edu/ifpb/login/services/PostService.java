@@ -10,23 +10,22 @@ import java.io.IOException;
 public class PostService extends IntentService {
 
     public PostService() {
-        super("Post Service");
+        super("PostService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        int codResponse;
         String planEmail = intent.getStringExtra("email");
         String planPassword = intent.getStringExtra("password");
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
 
         try {
             HttpClient httpClient = new HttpClient();
-            codResponse = httpClient.post(planEmail, planPassword);
-            intent.putExtra("responseRequestPost", codResponse);
-            LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+            int codeResponse = httpClient.post(planEmail, planPassword);
+            intent.putExtra("responsePost", codeResponse);
             manager.sendBroadcast(intent);
-        } catch (IOException e) {
-            e.getMessage();
+        } catch (Exception e) {
+            manager.sendBroadcast(intent);
         }
     }
 }

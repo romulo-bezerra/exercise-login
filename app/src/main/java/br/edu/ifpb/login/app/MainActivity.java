@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +17,8 @@ import br.edu.ifpb.login.services.PostService;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int COD_SUCCESS = 200;
+    private final int CODE_SUCCESS = 200;
+
     private Button btnAcessar;
     private EditText etEmail, etPassword;
     private String planEmail, planPassword;
@@ -29,11 +29,9 @@ public class MainActivity extends AppCompatActivity {
             btnAcessar.setText("Acessar");
             btnAcessar.setEnabled(true);
 
-            int responseRequestPost = intent.getIntExtra("responseRequestPost", 0);
+            int responseRequestPost = intent.getIntExtra("responsePost", 0);
 
-            Log.d("Mensagem recebida: ", String.valueOf(responseRequestPost));
-
-            if (responseRequestPost == COD_SUCCESS){
+            if (responseRequestPost == CODE_SUCCESS){
                 Toast.makeText(getBaseContext(), "SUCCESS",Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getBaseContext(), "FAILED",Toast.LENGTH_SHORT).show();
@@ -71,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        localBroadcastManager.unregisterReceiver(broadcastReceiverPost);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiverPost);
     }
 
 }
